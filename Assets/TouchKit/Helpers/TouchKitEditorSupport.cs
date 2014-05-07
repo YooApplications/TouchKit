@@ -102,17 +102,17 @@ public partial class TouchKit
 			{
 				if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
 				{
-                    var touchPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, Camera.main.farClipPlane));
+					var touchPos = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, _drawDistance));
 					Gizmos.DrawIcon(touchPos, "greenPoint.png", false);
 				}
 			}
 			
 			if (_simulatedMultitouchStartPosition.HasValue && !_hasActiveSimulatedTouch)
 			{
-                var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.farClipPlane));
+				var mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _drawDistance));
 				Gizmos.DrawIcon(mousePos, "redPoint.png", false);
 				
-                var simulatedPos = Camera.main.ScreenToWorldPoint(new Vector3(_simulatedMousePosition.x, _simulatedMousePosition.y, Camera.main.farClipPlane));
+				var simulatedPos = Camera.main.ScreenToWorldPoint(new Vector3(_simulatedMousePosition.x, _simulatedMousePosition.y, _drawDistance));
 				Gizmos.DrawIcon(simulatedPos, "redPoint.png", false);
 			}
 		}
@@ -140,7 +140,11 @@ public partial class TouchKit
 			}
 		}
 	}
-	
+
+	private float _drawDistance
+	{
+		get { return Camera.main.nearClipPlane + (Camera.main.farClipPlane - Camera.main.nearClipPlane) / 1000000f; }
+	}
 	
 	private void debugDrawRect(TKRect rect, Color color)
 	{
@@ -149,10 +153,10 @@ public partial class TouchKit
 		var tl = new Vector3(rect.xMin, rect.yMax, 0);
 		var tr = new Vector3(rect.xMax, rect.yMax, 0);
 		
-		bl = Camera.main.ScreenToWorldPoint(new Vector3(bl.x, bl.y, Camera.main.farClipPlane));
-		br = Camera.main.ScreenToWorldPoint(new Vector3(br.x, br.y, Camera.main.farClipPlane));
-		tl = Camera.main.ScreenToWorldPoint(new Vector3(tl.x, tl.y, Camera.main.farClipPlane));
-		tr = Camera.main.ScreenToWorldPoint(new Vector3(tr.x, tr.y, Camera.main.farClipPlane));
+		bl = Camera.main.ScreenToWorldPoint(new Vector3(bl.x, bl.y, _drawDistance));
+		br = Camera.main.ScreenToWorldPoint(new Vector3(br.x, br.y, _drawDistance));
+		tl = Camera.main.ScreenToWorldPoint(new Vector3(tl.x, tl.y, _drawDistance));
+		tr = Camera.main.ScreenToWorldPoint(new Vector3(tr.x, tr.y, _drawDistance));
 		
 		// draw four sides
 		Debug.DrawLine(bl, br, color);
