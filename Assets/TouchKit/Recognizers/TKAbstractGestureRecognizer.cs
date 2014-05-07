@@ -68,6 +68,7 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 	/// </summary>
 	private bool _sentTouchesBegan;
 	private bool _sentTouchesMoved;
+	private bool _sentTouchesStayed;
 	private bool _sentTouchesEnded;
 	
 	/// <summary>
@@ -129,7 +130,7 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 			return;
 		
 		// reset our state to avoid sending any phase more than once
-		_sentTouchesBegan = _sentTouchesMoved = _sentTouchesEnded = false;
+		_sentTouchesBegan = _sentTouchesMoved = _sentTouchesEnded = _sentTouchesStayed = false;
 		
 		// we loop backwards because the Began phase could end up removing a touch
 		for( var i = touches.Count - 1; i >= 0; i-- )
@@ -161,6 +162,15 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 								i -= ( removedTouches - 1 );
 						}
 						_sentTouchesBegan = true;
+					}
+					break;
+				}
+				case TouchPhase.Stationary:
+				{
+					if (!_sentTouchesStayed && populateSubsetOfTouchesBeingTracked( touches ) )
+					{
+						touchesStayed( _subsetOfTouchesBeingTrackedApplicableToCurrentRecognizer );
+						_sentTouchesStayed = true;
 					}
 					break;
 				}
@@ -235,7 +245,9 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 	
 	internal virtual void touchesEnded( List<TKTouch> touches )
 	{}
-	
+
+	internal virtual void touchesStayed( List<TKTouch> touches )
+	{}
 	
 	internal abstract void fireRecognizedEvent();
 	

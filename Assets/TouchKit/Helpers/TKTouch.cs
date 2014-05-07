@@ -10,15 +10,17 @@ public class TKTouch
 		public float deltaTime;
 		public int tapCount;
 		public TouchPhase phase = TouchPhase.Ended;
-
-		public Vector2 previousPosition
+		
+    	public Vector2 previousPosition;
+		public bool isImpossibleTouch;
+	
+		public Vector2 normalizedDeltaPosition
 		{
-				get { return position - deltaPosition; }
+				get { return position - previousPosition;}
 		}
 	
 	#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER
 		// used to track mouse movement and fake touches
-		private Vector2? _lastPosition;
 		private double _lastClickTime;
 		private double _multipleClickInterval = 0.2;
 	#endif
@@ -31,13 +33,25 @@ public class TKTouch
 		}
 	
 		public TKTouch populateWithTouch( Touch touch )
-		{
+		{		
+				isImpossibleTouch = (phase == TouchPhase.Moved && touch.phase == TouchPhase.Stationary && normalizedDeltaPosition.magnitude > 5f) || (isImpossibleTouch && touch.phase == TouchPhase.Stationary);
+ 		        
+				
+				if (touch.phase == TouchPhase.Began)
+				{
+						previousPosition = touch.position;
+				} else
+				{
+						previousPosition = position;
+				}
+				
 				position = touch.position;
 				deltaPosition = touch.deltaPosition;
 				deltaTime = touch.deltaTime;
 				tapCount = touch.tapCount;
 				phase = touch.phase;
-		
+
+
 				return this;
 		}
 
@@ -46,16 +60,9 @@ public class TKTouch
 		{
 				Vector2 currentPosition2d = new Vector2( currentPosition.x, currentPosition.y );
 		
-				// if we have a lastMousePosition use it to get a delta
-				if( _lastPosition.HasValue )
-				{
-						deltaPosition = currentPosition2d - _lastPosition.Value;
-				} else
-				{
-						deltaPosition = new Vector2( 0, 0 );
-				}
-		
-				switch( touchPhase )
+				deltaPosition = currentPosition2d - position;
+				previousPosition = position;
+        		switch( touchPhase )
 				{
 						case TouchPhase.Began:
 								phase = TouchPhase.Began;
@@ -65,8 +72,9 @@ public class TKTouch
 										tapCount++;
 								else
 										tapCount = 1;
-								_lastPosition = currentPosition2d;
+                				deltaPosition = new Vector2( 0, 0 );
 								_lastClickTime = Time.time;
+								previousPosition = currentPosition2d;
 								break;
 						case TouchPhase.Stationary:
 						case TouchPhase.Moved:
@@ -77,16 +85,13 @@ public class TKTouch
 								{
 										phase = TouchPhase.Moved;  
 								}
-								_lastPosition = currentPosition2d;
 								break;
 						case TouchPhase.Ended:
 								phase = TouchPhase.Ended;
-								_lastPosition = null;
 								break;
 				}
-		
-				position = currentPosition2d;
-		
+				
+            	position = currentPosition2d;
 				return this;
 		}
 	
