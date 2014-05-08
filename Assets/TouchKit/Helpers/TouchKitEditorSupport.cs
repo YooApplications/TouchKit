@@ -95,7 +95,7 @@ public partial class TouchKit
 		if (_instance == null)
 			return;
 		
-		if (drawTouches)
+		if (drawTouches && Camera.current == Camera.main)
 		{
 			// draw a green point for all active touches, including the touches from Unity remote
 			foreach (TKTouch touch in _touchCache)
