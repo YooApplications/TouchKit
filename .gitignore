@@ -8,7 +8,8 @@ Products
 Xcode/
 Temp/*
 Library
-
+*.mdpolicy.meta
+*.md.meta
 
 Assembly-CSharp-*
 *.suo
