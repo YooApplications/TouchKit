@@ -200,7 +200,7 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 	}
 	
 	
-	internal void reset()
+	public void reset()
 	{
 		_state = TKGestureRecognizerState.Possible;
 		_trackingTouches.Clear();
@@ -248,8 +248,8 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 
 	internal virtual void touchesStayed( List<TKTouch> touches )
 	{}
-	
-	internal abstract void fireRecognizedEvent();
+
+    internal virtual void fireRecognizedEvent() { }
 	
 	#endregion
 	
