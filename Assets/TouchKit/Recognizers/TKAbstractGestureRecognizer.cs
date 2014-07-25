@@ -233,23 +233,23 @@ public abstract class TKAbstractGestureRecognizer : IComparable<TKAbstractGestur
 	/// <summary>
 	/// return true if a touch was used, false if none were. this is used by any recognizers that should swallow touches if on a higher than 0 zIndex
 	/// </summary>
-	internal virtual bool touchesBegan( List<TKTouch> touches )
+	protected virtual bool touchesBegan( List<TKTouch> touches )
 	{
 		return false;
 	}
-	
-	
-	internal virtual void touchesMoved( List<TKTouch> touches )
-	{}
-	
-	
-	internal virtual void touchesEnded( List<TKTouch> touches )
+
+
+    protected virtual void touchesMoved(List<TKTouch> touches)
 	{}
 
-	internal virtual void touchesStayed( List<TKTouch> touches )
+
+    protected virtual void touchesEnded(List<TKTouch> touches)
 	{}
 
-    internal virtual void fireRecognizedEvent() { }
+    protected virtual void touchesStayed(List<TKTouch> touches)
+	{}
+
+    protected virtual void fireRecognizedEvent() { }
 	
 	#endregion
 	

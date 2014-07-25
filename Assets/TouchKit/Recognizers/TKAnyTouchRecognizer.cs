@@ -36,10 +36,10 @@ public class TKAnyTouchRecognizer : TKAbstractGestureRecognizer
 	#region TKAbstractGestureRecognizer
 	
 	// we do nothing here. all events will be handled internally
-	internal override void fireRecognizedEvent() {}
-	
-	
-	internal override bool touchesBegan( List<TKTouch> touches )
+    protected override void fireRecognizedEvent() { }
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		// grab the first touch that begins on us
 		if( state == TKGestureRecognizerState.Possible && touches[0].phase == TouchPhase.Began )
@@ -54,9 +54,9 @@ public class TKAnyTouchRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		// check to see if the touch is in our frame
 		var isTouchInFrame = boundaryFrame.Value.contains( touches[0].position );
@@ -81,9 +81,9 @@ public class TKAnyTouchRecognizer : TKAbstractGestureRecognizer
 			onTouchExited();
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		if( _trackingTouches.Contains( touches[0] ) )
 		{

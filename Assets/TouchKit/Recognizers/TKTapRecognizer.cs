@@ -30,14 +30,14 @@ public class TKTapRecognizer : TKAbstractGestureRecognizer
 	}
 
 
-	internal override void fireRecognizedEvent()
+    protected override void fireRecognizedEvent()
 	{
 		if( gestureRecognizedEvent != null )
 			gestureRecognizedEvent( this );
 	}
 
 
-	internal override bool touchesBegan( List<TKTouch> touches )
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Possible )
 		{
@@ -66,7 +66,7 @@ public class TKTapRecognizer : TKAbstractGestureRecognizer
 	}
 
 
-	internal override void touchesMoved( List<TKTouch> touches )
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Began )
 		{
@@ -83,7 +83,7 @@ public class TKTapRecognizer : TKAbstractGestureRecognizer
 	}
 
 
-	internal override void touchesEnded( List<TKTouch> touches )
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Began && ( Time.time <= _touchBeganTime + _maxDurationForTapConsideration ) )
 			state = TKGestureRecognizerState.Recognized;

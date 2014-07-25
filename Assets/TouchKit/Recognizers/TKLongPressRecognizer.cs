@@ -48,16 +48,16 @@ public class TKLongPressRecognizer : TKAbstractGestureRecognizer
 		
 		_waiting = false;
 	}
-	
-	
-	internal override void fireRecognizedEvent()
+
+
+    protected override void fireRecognizedEvent()
 	{
 		if( gestureRecognizedEvent != null )
 			gestureRecognizedEvent( this );
 	}
-	
-	
-	internal override bool touchesBegan( List<TKTouch> touches )
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		if( !_waiting && state == TKGestureRecognizerState.Possible )
 		{
@@ -70,9 +70,9 @@ public class TKLongPressRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Began || state == TKGestureRecognizerState.RecognizedAndStillRecognizing )
 		{
@@ -89,9 +89,9 @@ public class TKLongPressRecognizer : TKAbstractGestureRecognizer
 			}
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		// fire the complete event if we had previously recognized a long press
 		if( state == TKGestureRecognizerState.RecognizedAndStillRecognizing && gestureCompleteEvent != null )

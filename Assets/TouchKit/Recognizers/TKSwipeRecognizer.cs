@@ -182,17 +182,17 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void fireRecognizedEvent()
+
+
+    protected override void fireRecognizedEvent()
 	{
 		if( gestureRecognizedEvent != null )
 			gestureRecognizedEvent( this );
 	}
-	
-	
 
-	internal override bool touchesBegan( List<TKTouch> touches )
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Possible )
 		{
@@ -206,9 +206,9 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Began )
 		{
@@ -218,9 +218,9 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
 			}
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		state = TKGestureRecognizerState.Failed;
 	}

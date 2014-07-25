@@ -84,10 +84,10 @@ public class TKButtonRecognizer : TKAbstractGestureRecognizer
 	#region TKAbstractGestureRecognizer
 	
 	// we do nothing here. all events will be handled internally
-	internal override void fireRecognizedEvent() {}
-	
-	
-	internal override bool touchesBegan( List<TKTouch> touches )
+    protected override void fireRecognizedEvent() { }
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		// grab the first touch that begins on us
 		if( state == TKGestureRecognizerState.Possible && touches[0].phase == TouchPhase.Began )
@@ -101,9 +101,9 @@ public class TKButtonRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		// check to see if the touch is still in our frame
 		var isTouchInFrame = boundaryFrame.Value.contains( touches[0].position );
@@ -120,9 +120,9 @@ public class TKButtonRecognizer : TKAbstractGestureRecognizer
 			onDeselected();
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		// if we were previously highlighted (RecognizedAndStillRecognizing) we have an official touch
 		if( state == TKGestureRecognizerState.RecognizedAndStillRecognizing )

@@ -17,16 +17,16 @@ public class TKOneFingerRotationRecognizer : TKRotationRecognizer
 	/// this should be the center point in screen coordinates of the object that is being rotated
 	/// </summary>
 	public Vector2 targetPosition;
-	
-	
-	internal override void fireRecognizedEvent()
+
+
+    protected override void fireRecognizedEvent()
 	{
 		if( gestureRecognizedEvent != null )
 			gestureRecognizedEvent( this );
 	}
-	
-	
-	internal override bool touchesBegan( List<TKTouch> touches )
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Possible )
 		{
@@ -39,9 +39,9 @@ public class TKOneFingerRotationRecognizer : TKRotationRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.RecognizedAndStillRecognizing || state == TKGestureRecognizerState.Began )
 		{
@@ -51,9 +51,9 @@ public class TKOneFingerRotationRecognizer : TKRotationRecognizer
 			state = TKGestureRecognizerState.RecognizedAndStillRecognizing;
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		// if we had previously been recognizing fire our complete event
 		if( state == TKGestureRecognizerState.RecognizedAndStillRecognizing )

@@ -19,16 +19,16 @@ public class TKPinchRecognizer : TKAbstractGestureRecognizer
 	{
 		return Vector2.Distance( _trackingTouches[0].position, _trackingTouches[1].position );
 	}
-	
-	
-	internal override void fireRecognizedEvent()
+
+
+    protected override void fireRecognizedEvent()
 	{
 		if( gestureRecognizedEvent != null )
 			gestureRecognizedEvent( this );
 	}
-	
-	
-	internal override bool touchesBegan( List<TKTouch> touches )
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Possible )
 		{
@@ -57,9 +57,9 @@ public class TKPinchRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.RecognizedAndStillRecognizing )
 		{
@@ -69,9 +69,9 @@ public class TKPinchRecognizer : TKAbstractGestureRecognizer
 			state = TKGestureRecognizerState.RecognizedAndStillRecognizing;
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		// remove any completed touches
 		for( int i = 0; i < touches.Count; i++ )

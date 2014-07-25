@@ -15,16 +15,16 @@ public class TKPanRecognizer : TKAbstractGestureRecognizer
 	public int maximumNumberOfTouches = 2;
 	
 	private Vector2 _previousLocation;
-	
-	
-	internal override void fireRecognizedEvent()
+
+
+    protected override void fireRecognizedEvent()
 	{
 		if( gestureRecognizedEvent != null )
 			gestureRecognizedEvent( this );
 	}
-	
-	
-	internal override bool touchesBegan( List<TKTouch> touches )
+
+
+    protected override bool touchesBegan(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.Possible )
 		{
@@ -49,9 +49,9 @@ public class TKPanRecognizer : TKAbstractGestureRecognizer
 		
 		return false;
 	}
-	
-	
-	internal override void touchesMoved( List<TKTouch> touches )
+
+
+    protected override void touchesMoved(List<TKTouch> touches)
 	{
 		if( state == TKGestureRecognizerState.RecognizedAndStillRecognizing || state == TKGestureRecognizerState.Began )
 		{
@@ -61,9 +61,9 @@ public class TKPanRecognizer : TKAbstractGestureRecognizer
 			state = TKGestureRecognizerState.RecognizedAndStillRecognizing;
 		}
 	}
-	
-	
-	internal override void touchesEnded( List<TKTouch> touches )
+
+
+    protected override void touchesEnded(List<TKTouch> touches)
 	{
 		// remove any completed touches
 		for( int i = 0; i < touches.Count; i++ )
